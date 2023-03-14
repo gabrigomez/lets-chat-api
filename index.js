@@ -15,6 +15,22 @@ const io = new Server(server, {
   }
 });
 
+io.on("connection", (socket) => {
+  console.log(`User: ${socket.id} `);
+
+  socket.on("enter_room", (data) => {
+    socket.join(`User ${socket.id} entered: ${data}`)
+  });
+
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);    
+  })
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  })
+})
+
 server.listen(3001, () => {
   console.log("Server is running");
 })
