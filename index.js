@@ -18,7 +18,8 @@ io.on("connection", (socket) => {
   console.log(`User: ${socket.id} `);
 
   socket.on("enter_room", (data) => {
-    socket.join(`User ${socket.id} entered: ${data}`)
+    socket.join(data);
+    console.log(`User ${socket.id} entered: ${data}`);
   });
 
   socket.on("send_message", (data) => {
